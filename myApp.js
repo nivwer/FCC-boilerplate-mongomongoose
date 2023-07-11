@@ -1,5 +1,7 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
+const { Schema, model } = require('mongoose');
+
 
 const mongoURI = process.env.MONGO_URI;
 
@@ -15,7 +17,20 @@ mongoose
     console.error("Error", error);
   });
 
-let Person;
+
+const personSchema = new Schema({
+    name: {
+      type: String,
+      unique: true
+    },
+    age: Number,
+    favoriteFoods: [String]
+});
+  
+const Person = model('Person', personSchema)
+  
+
+
 
 const createAndSavePerson = (done) => {
   done(null /*, data*/);
