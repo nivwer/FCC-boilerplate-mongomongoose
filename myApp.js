@@ -32,8 +32,17 @@ const Person = model('Person', personSchema)
 
 
 
-const createAndSavePerson = (done) => {
-  done(null /*, data*/);
+const createAndSavePerson = async (done) => {
+  const document = new Person({
+    name: "Juan",
+    age: 18,
+    favoriteFoods: ["hambuger", "eggs"]
+  });
+
+  await document.save(function(err, data) {
+    if (err) return console.error(err);
+    done(null, data)
+  });
 };
 
 const createManyPeople = (arrayOfPeople, done) => {
