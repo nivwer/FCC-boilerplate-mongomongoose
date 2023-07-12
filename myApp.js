@@ -43,7 +43,7 @@ const createAndSavePerson = async (done) => {
     favoriteFoods: ["hambuger", "eggs"]
   });
 
-  await document.save(function(err, data) {
+  await document.save((err, data) => {
     if (err) return console.error(err);
     done(null, data)
   });
@@ -140,11 +140,16 @@ const removeById = async (personId, done) => {
   })
 };
 
-const removeManyPeople = (done) => {
-  const nameToRemove = "Mary";
+// Solution 11
 
-  done(null /*, data*/);
+const removeManyPeople = async (done) => {
+  const nameToRemove = "Mary";
+  await Person.deleteMany({ name: nameToRemove }, (err, res) => {
+    if (err) return console.log(err);
+    done(null, res);
+  });
 };
+
 
 const queryChain = (done) => {
   const foodToSearch = "burrito";
