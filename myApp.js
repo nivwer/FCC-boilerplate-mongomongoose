@@ -1,4 +1,7 @@
 require("dotenv").config();
+
+// Solution 1
+
 const mongoose = require("mongoose");
 const { Schema, model } = require('mongoose');
 
@@ -17,6 +20,7 @@ mongoose
     console.error("Error", error);
   });
 
+// Solution 2
 
 const personSchema = new Schema({
     name: {
@@ -30,7 +34,7 @@ const personSchema = new Schema({
 const Person = model('Person', personSchema)
   
 
-
+// Solution 3
 
 const createAndSavePerson = async (done) => {
   const document = new Person({
@@ -45,8 +49,31 @@ const createAndSavePerson = async (done) => {
   });
 };
 
+// Solution 4
+
+const arrayOfPeople = [
+  {
+    name: "Red",
+    age: 17,
+    favoriteFoods: ["eggs", "tomato"]
+  },
+  {
+    name: "Blue",
+    age: 19,
+    favoriteFoods: ["chicken", "apple"]
+  },
+  {
+    name: "Green",
+    age: 17,
+    favoriteFoods: ["noodles"]
+  }
+];
+
 const createManyPeople = (arrayOfPeople, done) => {
-  done(null /*, data*/);
+  Person.create(arrayOfPeople, (err, people) => {
+      if (err) return console.log(err);
+      done(null, people);   
+    });
 };
 
 const findPeopleByName = (personName, done) => {
